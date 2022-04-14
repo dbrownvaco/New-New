@@ -1,0 +1,124 @@
+<script>
+  /*
+   * Define custom JS here. Whatever you define here will run in the global Cookie Monster scope,
+   * so you can hook into internal processes if needed.
+   * 
+   * But in most cases, you'll simply want to define one of the following callback functions:
+   * - getGuide: When defined, this will be called whenever the user clicks GET GUIDE.
+   * - process: When defined, this will be called whenever the data in the form changes.
+   * - updateCustom: When defined, this will be called at the end of every GUI update cycle.
+   */
+
+  /**
+   * Should return an Object containing the following key:
+   * - markdown {string}: This markdown encoded text will be rendered on the page.
+   *     See https://www.markdownguide.org/ and the MARKDOWN section in the README.
+   * 
+   * Tip: The function receives context, but try not to customise the Guide too much
+   * depending on user input. Instead, use context to emphasize elements. Remember that
+   * the Guide will be static on the page once it is loaded.
+   * 
+   * @param {Object} context
+   * @param {Quint} context.quint
+   * @param {number} context.index
+   * @param {Quint[]} context.quints
+   * @param {boolean} context.readyToSubmit
+   * @return {Object}
+   */
+  // callbacks.getGuide = function() {
+  //   return {
+  //     markdown: `# example`,
+  //   }
+  // } 
+
+  /**
+   * By default, the app does not render a 'Process' button in the form. If
+   * 'process' is defined, it will be called when the user hits the 'Process'
+   * button, and will receive the a single Tuple, representing the 'next'
+   * value of the currently selected Tuple/Quint.
+   * 
+   * If the `processOnChange` flag is passed to the webAppBuilder, the button
+   * will not be rendered, but this function will be called whenever the form
+   * data changes.
+   * 
+   * The web app can function as a calculator, for example, by calculating
+   * something based on this Tuple, and returning the result.
+   * Note that a 'process' function can be defined here to run on the server (when
+   * access to back-end data is required), but can also be defined in the local 
+   * client_script.js.html file (which will be passed into webAppBuilder as
+   * customJs).
+   * If 'process' is defined in customJs, it will take precedence over the server-
+   * side 'process' function.
+   * 
+   * Should return an Object containing any of the following keys:
+   * - markdown {string}: This markdown encoded text will be rendered on the page.
+   *     See https://www.markdownguide.org/ and the MARKDOWN section in the README.
+   * - showToast {string}: What text should be shown in the toast message when the process
+   *     returns? Showing a toast whenever the form data changes may be annoying.
+   * - textToCopy: {Object[]}: Each object will be rendered as a COPY button.
+   *     The Object should contain the following keys:
+   *     - label {string=}: The button label. 'Copy' by default.
+   *     - content {string}: The text to be copied when the user clicks on the button.
+   *     - asMarkdown {boolean=}: Should the content be treated as markdown? If true,
+   *         the content will be read as markdown and the user will copy the resulting
+   *         HTML.
+   * - trigger {Object[]}: Each object will be rendered as a Trigger button.
+   *     The Object should contain the following keys:
+   *     - label {string=}: The button label. 'Trigger' by default.
+   *     - serverFunction {string}: The server function to be called when the user clicks
+   *         on the button.
+   *     - json {string=}: Contextual information to be passed to the server function when
+   *         the user clicks on the button. (The server doesn't retain state.)
+   * 
+   * @param {Object} context
+   * @param {Quint} context.quint
+   * @param {number} context.index
+   * @param {Quint[]} context.quints
+   * @param {boolean} context.readyToSubmit
+   * @return {Object}
+   */
+  // callbacks.process = function(context) {
+  //   return {
+  //     markdown: `# example`,
+  //     showToast: `example`,
+  //     textToCopy: [{content: 'Example'}],
+  //     trigger: [{label: 'Increment Value', serverFunction: 'incrementValue'}],
+  //   }
+  // }
+
+  /**
+   * Experimental.
+   * This callback is called just before a form submission, and should return an Object
+   * with a status property. Set status to 'ok' to allow submission to proceed. Set
+   * status to 'cancel' to cancel submission. For other values of status, the app will
+   * show a 'Data validation failed' message.
+   * You can also return a showToast (string) property, to show a custom toast message.
+   * 
+   * @param {Object} context
+   * @param {Quint} context.quint
+   * @param {number} context.index
+   * @param {Quint[]} context.quints
+   * @param {boolean} context.readyToSubmit
+   * @return {Object}
+   */
+  // callbacks.validate = function(context) {
+  //   return {
+  //     status: `ok`,
+  //     showToast: 'example',
+  //   }
+  // }
+
+  /**
+   * An escape hatch.
+   * Run custom code during every render update. This runs at the very end
+   * of the update cycle, so you can override anything on the page.
+   * 
+   * Potential uses:
+   * - Add custom buttons.
+   * 
+   * @todo: Create a simpler API.
+   */
+  // callbacks.updateCustom = function() {
+  //   createButton(dom.formButtonsBar, 'Custom', 'tertiary', () => alert('Example'), {prepend: true});
+  // }
+</script>
